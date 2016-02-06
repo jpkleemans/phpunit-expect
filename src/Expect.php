@@ -42,6 +42,8 @@ class Expect
      * Expect that an array has a specified key.
      *
      * @param mixed $key
+     *
+     * @return Expect
      */
     public function toHaveKey($key)
     {
@@ -50,6 +52,8 @@ class Expect
         } else {
             Assert::assertArrayHasKey($key, $this->value);
         }
+
+        return $this;
     }
 
     /**
@@ -57,6 +61,8 @@ class Expect
      *
      * @param array|ArrayAccess $subset
      * @param bool $strict Check for object identity
+     *
+     * @return Expect
      */
     public function toHaveSubset($subset, $strict = false)
     {
@@ -65,6 +71,8 @@ class Expect
         } else {
             Assert::assertArraySubset($subset, $this->value, $strict);
         }
+
+        return $this;
     }
 
     /**
@@ -74,6 +82,8 @@ class Expect
      * @param bool $ignoreCase
      * @param bool $checkForObjectIdentity
      * @param bool $checkForNonObjectIdentity
+     *
+     * @return Expect
      */
     public function toContain($needle, $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
     {
@@ -82,6 +92,8 @@ class Expect
         } else {
             Assert::assertContains($needle, $this->value, '', $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
         }
+
+        return $this;
     }
 
     /**
@@ -89,6 +101,8 @@ class Expect
      *
      * @param string $type
      * @param bool $isNativeType
+     *
+     * @return Expect
      */
     public function toContainOnly($type, $isNativeType = null)
     {
@@ -97,12 +111,16 @@ class Expect
         } else {
             Assert::assertContainsOnly($type, $this->value, $isNativeType);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a haystack contains only instances of a given classname
      *
      * @param string $classname
+     *
+     * @return Expect
      */
     public function toContainOnlyInstancesOf($classname)
     {
@@ -111,12 +129,16 @@ class Expect
         } else {
             Assert::assertContainsOnlyInstancesOf($classname, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect the number of elements of an array, Countable or Traversable.
      *
      * @param int $expectedCount
+     *
+     * @return Expect
      */
     public function toHaveCountOf($expectedCount)
     {
@@ -125,6 +147,28 @@ class Expect
         } else {
             Assert::assertCount($expectedCount, $this->value);
         }
+
+        return $this;
+    }
+
+    /**
+     * Expect that two variables have the same type and value.
+     * Used on objects, it Expect that two variables reference
+     * the same object.
+     *
+     * @param mixed $expected
+     *
+     * @return Expect
+     */
+    public function toBe($expected)
+    {
+        if ($this->not) {
+            Assert::assertNotSame($expected, $this->value);
+        } else {
+            Assert::assertSame($expected, $this->value);
+        }
+
+        return $this;
     }
 
     /**
@@ -135,6 +179,8 @@ class Expect
      * @param int $maxDepth
      * @param bool $canonicalize
      * @param bool $ignoreCase
+     *
+     * @return Expect
      */
     public function toEqual($expected, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
@@ -143,10 +189,14 @@ class Expect
         } else {
             Assert::assertEquals($expected, $this->value, '', $delta, $maxDepth, $canonicalize, $ignoreCase);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is empty.
+     *
+     * @return Expect
      */
     public function toBeEmpty()
     {
@@ -155,12 +205,16 @@ class Expect
         } else {
             Assert::assertEmpty($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a value is greater than another value.
      *
      * @param mixed $expected
+     *
+     * @return Expect
      */
     public function toBeGreaterThan($expected)
     {
@@ -169,12 +223,16 @@ class Expect
         } else {
             Assert::assertGreaterThan($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a value is greater than or equal to another value.
      *
      * @param mixed $expected
+     *
+     * @return Expect
      */
     public function toBeGreaterThanOrEqualTo($expected)
     {
@@ -183,12 +241,16 @@ class Expect
         } else {
             Assert::assertGreaterThanOrEqual($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a value is smaller than another value.
      *
      * @param mixed $expected
+     *
+     * @return Expect
      */
     public function toBeLessThan($expected)
     {
@@ -197,12 +259,16 @@ class Expect
         } else {
             Assert::assertLessThan($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a value is smaller than or equal to another value.
      *
      * @param mixed $expected
+     *
+     * @return Expect
      */
     public function toBeLessThanOrEqualTo($expected)
     {
@@ -211,6 +277,8 @@ class Expect
         } else {
             Assert::assertLessThanOrEqual($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
@@ -220,6 +288,8 @@ class Expect
      * @param string $expectedFile
      * @param bool $canonicalize
      * @param bool $ignoreCase
+     *
+     * @return Expect
      */
     public function toEqualFile($expectedFile, $canonicalize = false, $ignoreCase = false)
     {
@@ -236,10 +306,14 @@ class Expect
                 Assert::assertStringEqualsFile($expectedFile, $this->value, '', $canonicalize, $ignoreCase);
             }
         }
+
+        return $this;
     }
 
     /**
      * Expect that a file exists.
+     *
+     * @return Expect
      */
     public function toExist()
     {
@@ -248,10 +322,14 @@ class Expect
         } else {
             Assert::assertFileExists($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a condition is true.
+     *
+     * @return Expect
      */
     public function toBeTrue()
     {
@@ -260,10 +338,14 @@ class Expect
         } else {
             Assert::assertTrue($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a condition is false.
+     *
+     * @return Expect
      */
     public function toBeFalse()
     {
@@ -272,10 +354,14 @@ class Expect
         } else {
             Assert::assertFalse($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is null.
+     *
+     * @return Expect
      */
     public function toBeNull()
     {
@@ -284,10 +370,14 @@ class Expect
         } else {
             Assert::assertNull($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is finite.
+     *
+     * @return Expect
      */
     public function toBeFinite()
     {
@@ -296,10 +386,14 @@ class Expect
         } else {
             Assert::assertFinite($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is infinite.
+     *
+     * @return Expect
      */
     public function toBeInfinite()
     {
@@ -308,10 +402,14 @@ class Expect
         } else {
             Assert::assertInfinite($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is nan.
+     *
+     * @return Expect
      */
     public function toBeNan()
     {
@@ -320,12 +418,16 @@ class Expect
         } else {
             Assert::assertNan($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a class or an object has a specified attribute.
      *
      * @param string $attributeName
+     *
+     * @return Expect
      */
     public function toHaveAttribute($attributeName)
     {
@@ -342,12 +444,16 @@ class Expect
                 Assert::assertObjectHasAttribute($attributeName, $this->value);
             }
         }
+
+        return $this;
     }
 
     /**
      * Expect that a class has a specified static attribute.
      *
      * @param string $attributeName
+     *
+     * @return Expect
      */
     public function toHaveStaticAttribute($attributeName)
     {
@@ -356,28 +462,16 @@ class Expect
         } else {
             Assert::assertClassHasStaticAttribute($attributeName, $this->value);
         }
-    }
 
-    /**
-     * Expect that two variables have the same type and value.
-     * Used on objects, it Expect that two variables reference
-     * the same object.
-     *
-     * @param mixed $expected
-     */
-    public function toBeIdenticalTo($expected)
-    {
-        if ($this->not) {
-            Assert::assertNotSame($expected, $this->value);
-        } else {
-            Assert::assertSame($expected, $this->value);
-        }
+        return $this;
     }
 
     /**
      * Expect that a variable is of a given type.
      *
      * @param string $expected
+     *
+     * @return Expect
      */
     public function toBeInstanceOf($expected)
     {
@@ -386,12 +480,16 @@ class Expect
         } else {
             Assert::assertInstanceOf($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a variable is of a given type.
      *
      * @param string $expected
+     *
+     * @return Expect
      */
     public function toBeOfType($expected)
     {
@@ -400,12 +498,16 @@ class Expect
         } else {
             Assert::assertInternalType($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string matches a given regular expression.
      *
      * @param string $pattern
+     *
+     * @return Expect
      */
     public function toMatchRegExp($pattern)
     {
@@ -414,6 +516,8 @@ class Expect
         } else {
             Assert::assertRegExp($pattern, $this->value);
         }
+
+        return $this;
     }
 
     /**
@@ -421,6 +525,8 @@ class Expect
      * is the same.
      *
      * @param array|Countable|Traversable $expected
+     *
+     * @return Expect
      */
     public function toHaveSameSizeAs($expected)
     {
@@ -429,12 +535,16 @@ class Expect
         } else {
             Assert::assertSameSize($expected, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string matches a given format string.
      *
      * @param string $format
+     *
+     * @return Expect
      */
     public function toMatchFormat($format)
     {
@@ -443,12 +553,16 @@ class Expect
         } else {
             Assert::assertStringMatchesFormat($format, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string matches a given format file.
      *
      * @param string $formatFile
+     *
+     * @return Expect
      */
     public function toMatchFormatFile($formatFile)
     {
@@ -457,12 +571,16 @@ class Expect
         } else {
             Assert::assertStringMatchesFormatFile($formatFile, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string starts with a given prefix.
      *
      * @param string $prefix
+     *
+     * @return Expect
      */
     public function toStartWith($prefix)
     {
@@ -471,12 +589,16 @@ class Expect
         } else {
             Assert::assertStringStartsWith($prefix, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string ends with a given suffix.
      *
      * @param string $suffix
+     *
+     * @return Expect
      */
     public function toEndWith($suffix)
     {
@@ -485,6 +607,8 @@ class Expect
         } else {
             Assert::assertStringEndsWith($suffix, $this->value);
         }
+
+        return $this;
     }
 
     /**
@@ -492,6 +616,8 @@ class Expect
      * XML file.
      *
      * @param string $expectedFile
+     *
+     * @return Expect
      */
     public function toEqualXmlFile($expectedFile)
     {
@@ -508,6 +634,8 @@ class Expect
                 Assert::assertXmlStringEqualsXmlFile($expectedFile, $this->value);
             }
         }
+
+        return $this;
     }
 
     /**
@@ -515,6 +643,8 @@ class Expect
      *
      * @param DOMElement $expectedElement
      * @param bool $checkAttributes
+     *
+     * @return Expect
      */
     public function toHaveSameXMLStructureAs(DOMElement $expectedElement, $checkAttributes = false)
     {
@@ -523,10 +653,14 @@ class Expect
         } else {
             Assert::assertEqualXMLStructure($expectedElement, $this->value, $checkAttributes);
         }
+
+        return $this;
     }
 
     /**
      * Expect that a string is a valid JSON string.
+     *
+     * @return Expect
      */
     public function toBeJson()
     {
@@ -535,12 +669,16 @@ class Expect
         } else {
             Assert::assertJson($this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that two given JSON encoded objects or arrays are equal.
      *
      * @param string $expectedJson
+     *
+     * @return Expect
      */
     public function toEqualJson($expectedJson)
     {
@@ -549,12 +687,16 @@ class Expect
         } else {
             Assert::assertJsonStringEqualsJsonString($expectedJson, $this->value);
         }
+
+        return $this;
     }
 
     /**
      * Expect that the generated JSON encoded object and the content of the given file are equal.
      *
      * @param string $expectedFile
+     *
+     * @return Expect
      */
     public function toEqualJsonFile($expectedFile)
     {
@@ -571,5 +713,7 @@ class Expect
                 Assert::assertJsonStringEqualsJsonFile($expectedFile, $this->value);
             }
         }
+
+        return $this;
     }
 }

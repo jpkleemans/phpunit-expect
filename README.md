@@ -4,10 +4,18 @@ BDD-style assertions for PHPUnit
 ## Usage
 
 ``` php
-$name = 'John';
+$number = 10;
 
-expect($name)->toEqual('John');
-expect($name)->not()->toEqual('James');
+// Simple expectation
+expect($number)->toEqual(10);
+
+// Negative expectation
+expect($number)->not()->toBeOfType('string');
+
+// Chained expectations
+expect($number)
+    ->toBeGreaterThan(5)
+    ->toBeLessThan(20)
 ```
 
 ## Install
@@ -20,29 +28,21 @@ $ composer require jpkleemans/phpunit-expect:dev-master --dev
 
 ## API
 
-**toHaveKey**: Expect that an array has a specified key.
+**toBe**: Expect that two variables have the same type and value. Used on objects, it Expect that two variables reference the same object.
 
-```php
-expect(['test' => 'value'])->toHaveKey('test');
-expect(['key' => 'value'])->not()->toHaveKey('test');
-```
+**toEqual**: Expect that two variables are equal.
+
+**toHaveKey**: Expect that an array has a specified key.
 
 **toHaveSubset**: Expect that an array has a specified subset.
 
 **toContain**: Expect that a haystack contains a needle.
-
-```php
-expect([1, 2, 3])->toContain(2);
-expect([1, 2, 3])->not()->toContain(4);
-```
 
 **toContainOnly**: Expect that a haystack contains only values of a given type.
 
 **toContainOnlyInstancesOf**: Expect that a haystack contains only instances of a given classname
 
 **toHaveCountOf**: Expect the number of elements of an array, Countable or Traversable.
-
-**toEqual**: Expect that two variables are equal.
 
 **toBeEmpty**: Expect that a variable is empty.
 
@@ -73,8 +73,6 @@ expect([1, 2, 3])->not()->toContain(4);
 **toHaveAttribute**: Expect that a class or an object has a specified attribute.
 
 **toHaveStaticAttribute**: Expect that a class has a specified static attribute.
-
-**toBeIdenticalTo**: Expect that two variables have the same type and value. Used on objects, it Expect that two variables reference the same object.
 
 **toBeInstanceOf**: Expect that a variable is of a given type.
 
