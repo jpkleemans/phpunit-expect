@@ -20,10 +20,16 @@ expect($number)
 
 ## Install
 
-With Composer
+With Composer:
 
 ``` bash
 $ composer require jpkleemans/phpunit-expect:dev-master --dev
+```
+
+Or if you've installed PHPUnit globally:
+
+``` bash
+$ composer global require jpkleemans/phpunit-expect:dev-master
 ```
 
 ## API
