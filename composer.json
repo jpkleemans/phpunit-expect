@@ -1,0 +1,21 @@
+{
+    "name": "jpkleemans/phpunit-expect",
+    "description": "BDD-style assertions for PHPUnit",
+    "homepage": "https://github.com/jpkleemans/phpunit-expect",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan-Paul Kleemans",
+            "email": "jpkleemans@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^5.2"
+    },
+    "autoload": {
+        "files": [
+            "src/function.php"
+        ]
+    }
+}
