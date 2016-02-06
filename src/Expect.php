@@ -313,12 +313,12 @@ class Expect
     /**
      * Expect that a variable is nan.
      */
-    public function toBeANumber()
+    public function toBeNan()
     {
         if ($this->not) {
-            Assert::assertNan($this->value);
-        } else {
             // TODO
+        } else {
+            Assert::assertNan($this->value);
         }
     }
 
@@ -393,7 +393,7 @@ class Expect
      *
      * @param string $expected
      */
-    public function toBeType($expected)
+    public function toBeOfType($expected)
     {
         if ($this->not) {
             Assert::assertNotInternalType($expected, $this->value);
@@ -516,7 +516,7 @@ class Expect
      * @param DOMElement $expectedElement
      * @param bool $checkAttributes
      */
-    public function toHaveTheSameXMLStructureAs(DOMElement $expectedElement, $checkAttributes = false)
+    public function toHaveSameXMLStructureAs(DOMElement $expectedElement, $checkAttributes = false)
     {
         if ($this->not) {
             // TODO
