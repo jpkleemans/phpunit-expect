@@ -13,5 +13,5 @@ expect($name)->not()->toEqual('James');
 With Composer
 
 ``` bash
-$ composer require jpkleemans/phpunit-expect:dev-master
+$ composer require jpkleemans/phpunit-expect:dev-master --dev
 ```
