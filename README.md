@@ -7,7 +7,7 @@ BDD-style assertions for PHPUnit
 $number = 10;
 
 // Simple expectation
-expect($number)->toEqual(10);
+expect($number)->toBe(10);
 
 // Negative expectation
 expect($number)->not()->toBeOfType('string');
@@ -15,7 +15,7 @@ expect($number)->not()->toBeOfType('string');
 // Chained expectations
 expect($number)
     ->toBeGreaterThan(5)
-    ->toBeLessThan(20)
+    ->toBeLessThan(20);
 ```
 
 ## Install
