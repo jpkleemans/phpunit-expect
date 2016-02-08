@@ -497,7 +497,7 @@ class Expect
      *
      * @return Expect
      */
-    public function assertNan($message = '')
+    public function toBeNan($message = '')
     {
         Assert::assertNan($this->value, $message);
 
