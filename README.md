@@ -10,7 +10,7 @@ $number = 10;
 expect($number)->toBe(10);
 
 // Negative expectation
-expect($number)->not()->toBeOfType('string');
+expect($number)->notToBeOfType('string');
 
 // Chained expectations
 expect($number)

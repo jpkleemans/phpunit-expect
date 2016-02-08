@@ -12,11 +12,6 @@ class Expect
     private $value;
 
     /**
-     * @var bool
-     */
-    private $not = false;
-
-    /**
      * Expect constructor.
      *
      * @param mixed $value
@@ -27,31 +22,31 @@ class Expect
     }
 
     /**
-     * Evaluate to a negative expectation.
+     * Expect that an array has a specified key.
+     *
+     * @param mixed $key
+     * @param string $message
      *
      * @return Expect
      */
-    public function not()
+    public function toHaveKey($key, $message = '')
     {
-        $this->not = true;
+        Assert::assertArrayHasKey($key, $this->value, $message);
 
         return $this;
     }
 
     /**
-     * Expect that an array has a specified key.
+     * Expect that an array does not have a specified key.
      *
      * @param mixed $key
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveKey($key)
+    public function notToHaveKey($key, $message = '')
     {
-        if ($this->not) {
-            Assert::assertArrayNotHasKey($key, $this->value);
-        } else {
-            Assert::assertArrayHasKey($key, $this->value);
-        }
+        Assert::assertArrayNotHasKey($key, $this->value, $message);
 
         return $this;
     }
@@ -61,16 +56,13 @@ class Expect
      *
      * @param array|ArrayAccess $subset
      * @param bool $strict Check for object identity
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveSubset($subset, $strict = false)
+    public function toHaveSubset($subset, $strict = false, $message = '')
     {
-        if ($this->not) {
-            // TODO
-        } else {
-            Assert::assertArraySubset($subset, $this->value, $strict);
-        }
+        Assert::assertArraySubset($subset, $this->value, $strict, $message);
 
         return $this;
     }
@@ -79,19 +71,34 @@ class Expect
      * Expect that a haystack contains a needle.
      *
      * @param mixed $needle
+     * @param string $message
      * @param bool $ignoreCase
      * @param bool $checkForObjectIdentity
      * @param bool $checkForNonObjectIdentity
      *
      * @return Expect
      */
-    public function toContain($needle, $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+    public function toContain($needle, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
     {
-        if ($this->not) {
-            Assert::assertNotContains($needle, $this->value, '', $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        } else {
-            Assert::assertContains($needle, $this->value, '', $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        }
+        Assert::assertContains($needle, $this->value, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a haystack does not contain a needle.
+     *
+     * @param mixed $needle
+     * @param string $message
+     * @param bool $ignoreCase
+     * @param bool $checkForObjectIdentity
+     * @param bool $checkForNonObjectIdentity
+     *
+     * @return Expect
+     */
+    public function notToContain($needle, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+    {
+        Assert::assertNotContains($needle, $this->value, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
 
         return $this;
     }
@@ -101,16 +108,29 @@ class Expect
      *
      * @param string $type
      * @param bool $isNativeType
+     * @param string $message
      *
      * @return Expect
      */
-    public function toContainOnly($type, $isNativeType = null)
+    public function toContainOnly($type, $isNativeType = null, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotContainsOnly($type, $this->value, $isNativeType);
-        } else {
-            Assert::assertContainsOnly($type, $this->value, $isNativeType);
-        }
+        Assert::assertContainsOnly($type, $this->value, $isNativeType, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a haystack does not contain only values of a given type.
+     *
+     * @param string $type
+     * @param bool $isNativeType
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToContainOnly($type, $isNativeType = null, $message = '')
+    {
+        Assert::assertNotContainsOnly($type, $this->value, $isNativeType, $message);
 
         return $this;
     }
@@ -119,16 +139,13 @@ class Expect
      * Expect that a haystack contains only instances of a given classname
      *
      * @param string $classname
+     * @param string $message
      *
      * @return Expect
      */
-    public function toContainOnlyInstancesOf($classname)
+    public function toContainOnlyInstancesOf($classname, $message = '')
     {
-        if ($this->not) {
-            // TODO
-        } else {
-            Assert::assertContainsOnlyInstancesOf($classname, $this->value);
-        }
+        Assert::assertContainsOnlyInstancesOf($classname, $this->value, $message);
 
         return $this;
     }
@@ -137,36 +154,28 @@ class Expect
      * Expect the number of elements of an array, Countable or Traversable.
      *
      * @param int $expectedCount
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveCountOf($expectedCount)
+    public function toHaveCount($expectedCount, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotCount($expectedCount, $this->value);
-        } else {
-            Assert::assertCount($expectedCount, $this->value);
-        }
+        Assert::assertCount($expectedCount, $this->value, $message);
 
         return $this;
     }
 
     /**
-     * Expect that two variables have the same type and value.
-     * Used on objects, it Expect that two variables reference
-     * the same object.
+     * Expect the number of elements of an array, Countable or Traversable.
      *
-     * @param mixed $expected
+     * @param int $expectedCount
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBe($expected)
+    public function notToHaveCount($expectedCount, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotSame($expected, $this->value);
-        } else {
-            Assert::assertSame($expected, $this->value);
-        }
+        Assert::assertNotCount($expectedCount, $this->value, $message);
 
         return $this;
     }
@@ -175,6 +184,7 @@ class Expect
      * Expect that two variables are equal.
      *
      * @param mixed $expected
+     * @param string $message
      * @param float $delta
      * @param int $maxDepth
      * @param bool $canonicalize
@@ -182,13 +192,28 @@ class Expect
      *
      * @return Expect
      */
-    public function toEqual($expected, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+    public function toEqual($expected, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
-        if ($this->not) {
-            Assert::assertNotEquals($expected, $this->value, '', $delta, $maxDepth, $canonicalize, $ignoreCase);
-        } else {
-            Assert::assertEquals($expected, $this->value, '', $delta, $maxDepth, $canonicalize, $ignoreCase);
-        }
+        Assert::assertEquals($expected, $this->value, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two variables are not equal.
+     *
+     * @param mixed $expected
+     * @param string $message
+     * @param float $delta
+     * @param int $maxDepth
+     * @param bool $canonicalize
+     * @param bool $ignoreCase
+     *
+     * @return Expect
+     */
+    public function notToEqual($expected, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+    {
+        Assert::assertNotEquals($expected, $this->value, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
 
         return $this;
     }
@@ -196,15 +221,27 @@ class Expect
     /**
      * Expect that a variable is empty.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeEmpty()
+    public function toBeEmpty($message = '')
     {
-        if ($this->not) {
-            Assert::assertNotEmpty($this->value);
-        } else {
-            Assert::assertEmpty($this->value);
-        }
+        Assert::assertEmpty($this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a variable is not empty.
+     *
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeEmpty($message = '')
+    {
+        Assert::assertNotEmpty($this->value, $message);
 
         return $this;
     }
@@ -213,16 +250,13 @@ class Expect
      * Expect that a value is greater than another value.
      *
      * @param mixed $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeGreaterThan($expected)
+    public function toBeGreaterThan($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertLessThanOrEqual($expected, $this->value);
-        } else {
-            Assert::assertGreaterThan($expected, $this->value);
-        }
+        Assert::assertGreaterThan($expected, $this->value, $message);
 
         return $this;
     }
@@ -231,16 +265,13 @@ class Expect
      * Expect that a value is greater than or equal to another value.
      *
      * @param mixed $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeGreaterThanOrEqualTo($expected)
+    public function toBeGreaterThanOrEqualTo($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertLessThan($expected, $this->value);
-        } else {
-            Assert::assertGreaterThanOrEqual($expected, $this->value);
-        }
+        Assert::assertGreaterThanOrEqual($expected, $this->value, $message);
 
         return $this;
     }
@@ -249,16 +280,13 @@ class Expect
      * Expect that a value is smaller than another value.
      *
      * @param mixed $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeLessThan($expected)
+    public function toBeLessThan($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertGreaterThanOrEqual($expected, $this->value);
-        } else {
-            Assert::assertLessThan($expected, $this->value);
-        }
+        Assert::assertLessThan($expected, $this->value, $message);
 
         return $this;
     }
@@ -267,16 +295,13 @@ class Expect
      * Expect that a value is smaller than or equal to another value.
      *
      * @param mixed $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeLessThanOrEqualTo($expected)
+    public function toBeLessThanOrEqualTo($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertGreaterThan($expected, $this->value);
-        } else {
-            Assert::assertLessThanOrEqual($expected, $this->value);
-        }
+        Assert::assertLessThanOrEqual($expected, $this->value, $message);
 
         return $this;
     }
@@ -285,26 +310,41 @@ class Expect
      * Expect that the contents of one file or a string is equal to the contents of another
      * file.
      *
-     * @param string $expectedFile
+     * @param string $expected
+     * @param string $message
      * @param bool $canonicalize
      * @param bool $ignoreCase
      *
      * @return Expect
      */
-    public function toEqualFile($expectedFile, $canonicalize = false, $ignoreCase = false)
+    public function toEqualFile($expected, $message = '', $canonicalize = false, $ignoreCase = false)
     {
-        if (file_exists($expectedFile)) { // file
-            if ($this->not) {
-                Assert::assertFileNotEquals($expectedFile, $this->value, '', $canonicalize, $ignoreCase);
-            } else {
-                Assert::assertFileEquals($expectedFile, $this->value, '', $canonicalize, $ignoreCase);
-            }
+        if (file_exists($this->value)) { // file
+            Assert::assertFileEquals($expected, $this->value, $message, $canonicalize, $ignoreCase);
         } else { // string
-            if ($this->not) {
-                Assert::assertStringNotEqualsFile($expectedFile, $this->value, '', $canonicalize, $ignoreCase);
-            } else {
-                Assert::assertStringEqualsFile($expectedFile, $this->value, '', $canonicalize, $ignoreCase);
-            }
+            Assert::assertStringEqualsFile($expected, $this->value, $message, $canonicalize, $ignoreCase);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Expect that the contents of one file or a string is not equal to the contents of
+     * another file.
+     *
+     * @param string $expected
+     * @param string $message
+     * @param bool $canonicalize
+     * @param bool $ignoreCase
+     *
+     * @return Expect
+     */
+    public function notToEqualFile($expected, $message = '', $canonicalize = false, $ignoreCase = false)
+    {
+        if (file_exists($this->value)) { // file
+            Assert::assertFileNotEquals($expected, $this->value, $message, $canonicalize, $ignoreCase);
+        } else { // string
+            Assert::assertStringNotEqualsFile($expected, $this->value, $message, $canonicalize, $ignoreCase);
         }
 
         return $this;
@@ -313,15 +353,27 @@ class Expect
     /**
      * Expect that a file exists.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toExist()
+    public function toExist($message = '')
     {
-        if ($this->not) {
-            Assert::assertFileNotExists($this->value);
-        } else {
-            Assert::assertFileExists($this->value);
-        }
+        Assert::assertFileExists($this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a file does not exist.
+     *
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToExist($message = '')
+    {
+        Assert::assertFileNotExists($this->value, $message);
 
         return $this;
     }
@@ -329,15 +381,27 @@ class Expect
     /**
      * Expect that a condition is true.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeTrue()
+    public function toBeTrue($message = '')
     {
-        if ($this->not) {
-            Assert::assertNotTrue($this->value);
-        } else {
-            Assert::assertTrue($this->value);
-        }
+        Assert::assertTrue($this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a condition is not true.
+     *
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeTrue($message = '')
+    {
+        Assert::assertNotTrue($this->value, $message);
 
         return $this;
     }
@@ -345,15 +409,27 @@ class Expect
     /**
      * Expect that a condition is false.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeFalse()
+    public function toBeFalse($message = '')
     {
-        if ($this->not) {
-            Assert::assertNotFalse($this->value);
-        } else {
-            Assert::assertFalse($this->value);
-        }
+        Assert::assertFalse($this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a condition is not false.
+     *
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeFalse($message = '')
+    {
+        Assert::assertNotFalse($this->value, $message);
 
         return $this;
     }
@@ -361,15 +437,27 @@ class Expect
     /**
      * Expect that a variable is null.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeNull()
+    public function toBeNull($message = '')
     {
-        if ($this->not) {
-            Assert::assertNotNull($this->value);
-        } else {
-            Assert::assertNull($this->value);
-        }
+        Assert::assertNull($this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a variable is not null.
+     *
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeNull($message = '')
+    {
+        Assert::assertNotNull($this->value, $message);
 
         return $this;
     }
@@ -377,15 +465,13 @@ class Expect
     /**
      * Expect that a variable is finite.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeFinite()
+    public function toBeFinite($message = '')
     {
-        if ($this->not) {
-            Assert::assertInfinite($this->value);
-        } else {
-            Assert::assertFinite($this->value);
-        }
+        Assert::assertFinite($this->value, $message);
 
         return $this;
     }
@@ -393,15 +479,13 @@ class Expect
     /**
      * Expect that a variable is infinite.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeInfinite()
+    public function toBeInfinite($message = '')
     {
-        if ($this->not) {
-            Assert::assertFinite($this->value);
-        } else {
-            Assert::assertInfinite($this->value);
-        }
+        Assert::assertInfinite($this->value, $message);
 
         return $this;
     }
@@ -409,15 +493,13 @@ class Expect
     /**
      * Expect that a variable is nan.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeNan()
+    public function assertNan($message = '')
     {
-        if ($this->not) {
-            // TODO
-        } else {
-            Assert::assertNan($this->value);
-        }
+        Assert::assertNan($this->value, $message);
 
         return $this;
     }
@@ -426,23 +508,35 @@ class Expect
      * Expect that a class or an object has a specified attribute.
      *
      * @param string $attributeName
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveAttribute($attributeName)
+    public function toHaveAttribute($attributeName, $message = '')
     {
         if (is_string($this->value)) { // class
-            if ($this->not) {
-                Assert::assertClassNotHasAttribute($attributeName, $this->value);
-            } else {
-                Assert::assertClassHasAttribute($attributeName, $this->value);
-            }
+            Assert::assertClassHasAttribute($attributeName, $this->value, $message);
         } else { // object
-            if ($this->not) {
-                Assert::assertObjectNotHasAttribute($attributeName, $this->value);
-            } else {
-                Assert::assertObjectHasAttribute($attributeName, $this->value);
-            }
+            Assert::assertObjectHasAttribute($attributeName, $this->value, $message);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Expect that a class or an object does not have a specified attribute.
+     *
+     * @param string $attributeName
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToHaveAttribute($attributeName, $message = '')
+    {
+        if (is_string($this->value)) { // class
+            Assert::assertClassNotHasAttribute($attributeName, $this->value, $message);
+        } else { // object
+            Assert::assertObjectNotHasAttribute($attributeName, $this->value, $message);
         }
 
         return $this;
@@ -452,16 +546,62 @@ class Expect
      * Expect that a class has a specified static attribute.
      *
      * @param string $attributeName
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveStaticAttribute($attributeName)
+    public function toHaveStaticAttribute($attributeName, $message = '')
     {
-        if ($this->not) {
-            Assert::assertClassNotHasStaticAttribute($attributeName, $this->value);
-        } else {
-            Assert::assertClassHasStaticAttribute($attributeName, $this->value);
-        }
+        Assert::assertClassHasStaticAttribute($attributeName, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a class does not have a specified static attribute.
+     *
+     * @param string $attributeName
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToHaveStaticAttribute($attributeName, $message = '')
+    {
+        Assert::assertClassNotHasStaticAttribute($attributeName, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two variables have the same type and value.
+     * Used on objects, it asserts that two variables reference
+     * the same object.
+     *
+     * @param mixed $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function toBe($expected, $message = '')
+    {
+        Assert::assertSame($expected, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two variables do not have the same type and value.
+     * Used on objects, it asserts that two variables do not reference
+     * the same object.
+     *
+     * @param mixed $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBe($expected, $message = '')
+    {
+        Assert::assertNotSame($expected, $this->value, $message);
 
         return $this;
     }
@@ -470,16 +610,28 @@ class Expect
      * Expect that a variable is of a given type.
      *
      * @param string $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeInstanceOf($expected)
+    public function toBeInstanceOf($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotInstanceOf($expected, $this->value);
-        } else {
-            Assert::assertInstanceOf($expected, $this->value);
-        }
+        Assert::assertInstanceOf($expected, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a variable is not of a given type.
+     *
+     * @param string $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeInstanceOf($expected, $message = '')
+    {
+        Assert::assertNotInstanceOf($expected, $this->value, $message);
 
         return $this;
     }
@@ -488,16 +640,28 @@ class Expect
      * Expect that a variable is of a given type.
      *
      * @param string $expected
+     * @param string $message
      *
      * @return Expect
      */
-    public function toBeOfType($expected)
+    public function toBeOfType($expected, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotInternalType($expected, $this->value);
-        } else {
-            Assert::assertInternalType($expected, $this->value);
-        }
+        Assert::assertInternalType($expected, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a variable is not of a given type.
+     *
+     * @param string $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToBeOfType($expected, $message = '')
+    {
+        Assert::assertNotInternalType($expected, $this->value, $message);
 
         return $this;
     }
@@ -506,35 +670,60 @@ class Expect
      * Expect that a string matches a given regular expression.
      *
      * @param string $pattern
+     * @param string $message
      *
      * @return Expect
      */
-    public function toMatchRegExp($pattern)
+    public function toMatchRegExp($pattern, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotRegExp($pattern, $this->value);
-        } else {
-            Assert::assertRegExp($pattern, $this->value);
-        }
+        Assert::assertRegExp($pattern, $this->value, $message);
 
         return $this;
     }
 
     /**
-     * Expect that the size of two arrays (or `Countable` or `Traversable` objects)
-     * is the same.
+     * Expect that a string does not match a given regular expression.
      *
-     * @param array|Countable|Traversable $expected
+     * @param string $pattern
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveSameSizeAs($expected)
+    public function notToMatchRegExp($pattern, $message = '')
     {
-        if ($this->not) {
-            Assert::assertNotSameSize($expected, $this->value);
-        } else {
-            Assert::assertSameSize($expected, $this->value);
-        }
+        Assert::assertNotRegExp($pattern, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Assert that the size of two arrays (or `Countable` or `Traversable` objects)
+     * is the same.
+     *
+     * @param array|Countable|Traversable $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function toHaveSameSizeAs($expected, $message = '')
+    {
+        Assert::assertSameSize($expected, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Assert that the size of two arrays (or `Countable` or `Traversable` objects)
+     * is not the same.
+     *
+     * @param array|Countable|Traversable $expected
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToHaveSameSizeAs($expected, $message = '')
+    {
+        Assert::assertNotSameSize($expected, $this->value, $message);
 
         return $this;
     }
@@ -543,16 +732,28 @@ class Expect
      * Expect that a string matches a given format string.
      *
      * @param string $format
+     * @param string $message
      *
      * @return Expect
      */
-    public function toMatchFormat($format)
+    public function toMatchFormat($format, $message = '')
     {
-        if ($this->not) {
-            Assert::assertStringNotMatchesFormat($format, $this->value);
-        } else {
-            Assert::assertStringMatchesFormat($format, $this->value);
-        }
+        Assert::assertStringMatchesFormat($format, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a string does not match a given format string.
+     *
+     * @param string $format
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToMatchFormat($format, $message = '')
+    {
+        Assert::assertStringNotMatchesFormat($format, $this->value, $message);
 
         return $this;
     }
@@ -561,16 +762,28 @@ class Expect
      * Expect that a string matches a given format file.
      *
      * @param string $formatFile
+     * @param string $message
      *
      * @return Expect
      */
-    public function toMatchFormatFile($formatFile)
+    public function toMatchFormatFile($formatFile, $message = '')
     {
-        if ($this->not) {
-            Assert::assertStringNotMatchesFormatFile($formatFile, $this->value);
-        } else {
-            Assert::assertStringMatchesFormatFile($formatFile, $this->value);
-        }
+        Assert::assertStringMatchesFormatFile($formatFile, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a string does not match a given format string.
+     *
+     * @param string $formatFile
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToMatchFormatFile($formatFile, $message = '')
+    {
+        Assert::assertStringNotMatchesFormatFile($formatFile, $this->value, $message);
 
         return $this;
     }
@@ -579,16 +792,28 @@ class Expect
      * Expect that a string starts with a given prefix.
      *
      * @param string $prefix
+     * @param string $message
      *
      * @return Expect
      */
-    public function toStartWith($prefix)
+    public function toStartWith($prefix, $message = '')
     {
-        if ($this->not) {
-            Assert::assertStringStartsNotWith($prefix, $this->value);
-        } else {
-            Assert::assertStringStartsWith($prefix, $this->value);
-        }
+        Assert::assertStringStartsWith($prefix, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a string starts not with a given prefix.
+     *
+     * @param string $prefix
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToStartWith($prefix, $message = '')
+    {
+        Assert::assertStringStartsNotWith($prefix, $this->value, $message);
 
         return $this;
     }
@@ -597,43 +822,96 @@ class Expect
      * Expect that a string ends with a given suffix.
      *
      * @param string $suffix
+     * @param string $message
      *
      * @return Expect
      */
-    public function toEndWith($suffix)
+    public function toEndWith($suffix, $message = '')
     {
-        if ($this->not) {
-            Assert::assertStringEndsNotWith($suffix, $this->value);
-        } else {
-            Assert::assertStringEndsWith($suffix, $this->value);
+        Assert::stringEndsWith($suffix, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that a string ends not with a given suffix.
+     *
+     * @param string $suffix
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToEndWith($suffix, $message = '')
+    {
+        Assert::assertStringEndsNotWith($suffix, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two XML files or documents are equal.
+     *
+     * @param string $expectedFile
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function toEqualXmlFile($expectedFile, $message = '')
+    {
+        if (file_exists($this->value)) { // file
+            Assert::assertXmlFileEqualsXmlFile($expectedFile, $this->value, $message);
+        } else { // string
+            Assert::assertXmlStringEqualsXmlFile($expectedFile, $this->value, $message);
         }
 
         return $this;
     }
 
     /**
-     * Expect that the contents of one XML file or a string is equal to the contents of another
-     * XML file.
+     * Expect that two XML files or documents are not equal.
      *
      * @param string $expectedFile
+     * @param string $message
      *
      * @return Expect
      */
-    public function toEqualXmlFile($expectedFile)
+    public function notToEqualXmlFile($expectedFile, $message = '')
     {
-        if (file_exists($expectedFile)) { // file
-            if ($this->not) {
-                Assert::assertXmlFileNotEqualsXmlFile($expectedFile, $this->value);
-            } else {
-                Assert::assertXmlFileEqualsXmlFile($expectedFile, $this->value);
-            }
+        if (file_exists($this->value)) { // file
+            Assert::assertXmlFileNotEqualsXmlFile($expectedFile, $this->value, $message);
         } else { // string
-            if ($this->not) {
-                Assert::assertXmlStringNotEqualsXmlFile($expectedFile, $this->value);
-            } else {
-                Assert::assertXmlStringEqualsXmlFile($expectedFile, $this->value);
-            }
+            Assert::assertXmlStringNotEqualsXmlFile($expectedFile, $this->value, $message);
         }
+
+        return $this;
+    }
+
+    /**
+     * Expect that two XML documents are equal.
+     *
+     * @param string $expectedXml
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function toEqualXml($expectedXml, $message = '')
+    {
+        Assert::assertXmlStringEqualsXmlString($expectedXml, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two XML documents are not equal.
+     *
+     * @param string $expectedXml
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToEqualXml($expectedXml, $message = '')
+    {
+        Assert::assertXmlStringNotEqualsXmlString($expectedXml, $this->value, $message);
 
         return $this;
     }
@@ -643,16 +921,13 @@ class Expect
      *
      * @param DOMElement $expectedElement
      * @param bool $checkAttributes
+     * @param string $message
      *
      * @return Expect
      */
-    public function toHaveSameXMLStructureAs(DOMElement $expectedElement, $checkAttributes = false)
+    public function toHaveSameXMLStructureAs(DOMElement $expectedElement, $checkAttributes = false, $message = '')
     {
-        if ($this->not) {
-            // TODO
-        } else {
-            Assert::assertEqualXMLStructure($expectedElement, $this->value, $checkAttributes);
-        }
+        Assert::assertEqualXMLStructure($expectedElement, $this->value, $checkAttributes, $message);
 
         return $this;
     }
@@ -660,15 +935,13 @@ class Expect
     /**
      * Expect that a string is a valid JSON string.
      *
+     * @param string $message
+     *
      * @return Expect
      */
-    public function toBeJson()
+    public function toBeJson($message = '')
     {
-        if ($this->not) {
-            // TODO
-        } else {
-            Assert::assertJson($this->value);
-        }
+        Assert::assertJson($this->value, $message);
 
         return $this;
     }
@@ -677,16 +950,28 @@ class Expect
      * Expect that two given JSON encoded objects or arrays are equal.
      *
      * @param string $expectedJson
+     * @param string $message
      *
      * @return Expect
      */
-    public function toEqualJson($expectedJson)
+    public function toEqualJson($expectedJson, $message = '')
     {
-        if ($this->not) {
-            Assert::assertJsonStringNotEqualsJsonString($expectedJson, $this->value);
-        } else {
-            Assert::assertJsonStringEqualsJsonString($expectedJson, $this->value);
-        }
+        Assert::assertJsonStringEqualsJsonString($expectedJson, $this->value, $message);
+
+        return $this;
+    }
+
+    /**
+     * Expect that two given JSON encoded objects or arrays are not equal.
+     *
+     * @param string $expectedJson
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToEqualJson($expectedJson, $message = '')
+    {
+        Assert::assertJsonStringNotEqualsJsonString($expectedJson, $this->value, $message);
 
         return $this;
     }
@@ -695,23 +980,35 @@ class Expect
      * Expect that the generated JSON encoded object and the content of the given file are equal.
      *
      * @param string $expectedFile
+     * @param string $message
      *
      * @return Expect
      */
-    public function toEqualJsonFile($expectedFile)
+    public function toEqualJsonFile($expectedFile, $message = '')
     {
-        if (file_exists($expectedFile)) { // file
-            if ($this->not) {
-                Assert::assertJsonFileEqualsJsonFile($expectedFile, $this->value);
-            } else {
-                Assert::assertJsonFileEqualsJsonFile($expectedFile, $this->value);
-            }
+        if (file_exists($this->value)) { // file
+            Assert::assertJsonFileEqualsJsonFile($expectedFile, $this->value, $message);
         } else { // string
-            if ($this->not) {
-                Assert::assertJsonStringNotEqualsJsonFile($expectedFile, $this->value);
-            } else {
-                Assert::assertJsonStringEqualsJsonFile($expectedFile, $this->value);
-            }
+            Assert::assertJsonStringEqualsJsonFile($expectedFile, $this->value, $message);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Expect that the generated JSON encoded object and the content of the given file are not equal.
+     *
+     * @param string $expectedFile
+     * @param string $message
+     *
+     * @return Expect
+     */
+    public function notToEqualJsonFile($expectedFile, $message = '')
+    {
+        if (file_exists($this->value)) { // file
+            Assert::assertJsonFileEqualsJsonFile($expectedFile, $this->value, $message);
+        } else { // string
+            Assert::assertJsonStringNotEqualsJsonFile($expectedFile, $this->value, $message);
         }
 
         return $this;
