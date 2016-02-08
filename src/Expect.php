@@ -307,8 +307,7 @@ class Expect
     }
 
     /**
-     * Expect that the contents of one file or a string is equal to the contents of another
-     * file.
+     * Expect that the contents of one file or a string is equal to the contents of another file.
      *
      * @param string $expected
      * @param string $message
@@ -329,8 +328,7 @@ class Expect
     }
 
     /**
-     * Expect that the contents of one file or a string is not equal to the contents of
-     * another file.
+     * Expect that the contents of one file or a string is not equal to the contents of another file.
      *
      * @param string $expected
      * @param string $message
@@ -574,8 +572,7 @@ class Expect
 
     /**
      * Expect that two variables have the same type and value.
-     * Used on objects, it asserts that two variables reference
-     * the same object.
+     * Used on objects, it asserts that two variables reference the same object.
      *
      * @param mixed $expected
      * @param string $message
@@ -591,8 +588,7 @@ class Expect
 
     /**
      * Expect that two variables do not have the same type and value.
-     * Used on objects, it asserts that two variables do not reference
-     * the same object.
+     * Used on objects, it asserts that two variables do not reference the same object.
      *
      * @param mixed $expected
      * @param string $message
@@ -697,8 +693,7 @@ class Expect
     }
 
     /**
-     * Assert that the size of two arrays (or `Countable` or `Traversable` objects)
-     * is the same.
+     * Assert that the size of two arrays (or `Countable` or `Traversable` objects) is the same.
      *
      * @param array|Countable|Traversable $expected
      * @param string $message
@@ -713,8 +708,7 @@ class Expect
     }
 
     /**
-     * Assert that the size of two arrays (or `Countable` or `Traversable` objects)
-     * is not the same.
+     * Assert that the size of two arrays (or `Countable` or `Traversable` objects) is not the same.
      *
      * @param array|Countable|Traversable $expected
      * @param string $message
