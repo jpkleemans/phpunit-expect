@@ -32,76 +32,195 @@ Or if you've installed PHPUnit globally:
 $ composer global require jpkleemans/phpunit-expect
 ```
 
-## API
+## Expectations
 
-**toBe**: Expect that two variables have the same type and value. Used on objects, it Expect that two variables reference the same object.
+### toBe
+Expect that two variables have the same type and value.
+Used on objects, it asserts that two variables reference the same object.
 
-**toEqual**: Expect that two variables are equal.
+### notToBe
+Expect that two variables do not have the same type and value.
+Used on objects, it asserts that two variables do not reference the same object.
 
-**toHaveKey**: Expect that an array has a specified key.
+### toEqual
+Expect that two variables are equal.
 
-**toHaveSubset**: Expect that an array has a specified subset.
+### notToEqual
+Expect that two variables are not equal.
 
-**toContain**: Expect that a haystack contains a needle.
+### toHaveKey
+Expect that an array has a specified key.
 
-**toContainOnly**: Expect that a haystack contains only values of a given type.
+### notToHaveKey
+Expect that an array does not have a specified key.
 
-**toContainOnlyInstancesOf**: Expect that a haystack contains only instances of a given classname
+### toHaveSubset
+Expect that an array has a specified subset.
 
-**toHaveCountOf**: Expect the number of elements of an array, Countable or Traversable.
+### toContain
+Expect that a haystack contains a needle.
 
-**toBeEmpty**: Expect that a variable is empty.
+### notToContain
+Expect that a haystack does not contain a needle.
 
-**toBeGreaterThan**: Expect that a value is greater than another value.
+### toContainOnly
+Expect that a haystack contains only values of a given type.
 
-**toBeGreaterThanOrEqualTo**: Expect that a value is greater than or equal to another value.
+### notToContainOnly
+Expect that a haystack does not contain only values of a given type.
 
-**toBeLessThan**: Expect that a value is smaller than another value.
+### toContainOnlyInstancesOf
+Expect that a haystack contains only instances of a given classname
 
-**toBeLessThanOrEqualTo**: Expect that a value is smaller than or equal to another value.
+### toHaveCount
+Expect the number of elements of an array, Countable or Traversable.
 
-**toEqualFile**: Expect that the contents of one file or a string is equal to the contents of another file.
+### notToHaveCount
+Expect the number of elements of an array, Countable or Traversable.
 
-**toExist**: Expect that a file exists.
+### toBeEmpty
+Expect that a variable is empty.
 
-**toBeTrue**: Expect that a condition is true.
+### notToBeEmpty
+Expect that a variable is not empty.
 
-**toBeFalse**: Expect that a condition is false.
+### toBeGreaterThan
+Expect that a value is greater than another value.
 
-**toBeNull**: Expect that a variable is null.
+### toBeGreaterThanOrEqualTo
+Expect that a value is greater than or equal to another value.
 
-**toBeFinite**: Expect that a variable is finite.
+### toBeLessThan
+Expect that a value is smaller than another value.
 
-**toBeInfinite**: Expect that a variable is infinite.
+### toBeLessThanOrEqualTo
+Expect that a value is smaller than or equal to another value.
 
-**toBeNan**: Expect that a variable is nan.
+### toEqualFile
+Expect that the contents of one file or a string is equal to the contents of another file.
 
-**toHaveAttribute**: Expect that a class or an object has a specified attribute.
+### notToEqualFile
+Expect that the contents of one file or a string is not equal to the contents of another file.
 
-**toHaveStaticAttribute**: Expect that a class has a specified static attribute.
+### toExist
+Expect that a file exists.
 
-**toBeInstanceOf**: Expect that a variable is of a given type.
+### notToExist
+Expect that a file does not exist.
 
-**toBeOfType**: Expect that a variable is of a given type.
+### toBeTrue
+Expect that a condition is true.
 
-**toMatchRegExp**: Expect that a string matches a given regular expression.
+### notToBeTrue
+Expect that a condition is not true.
 
-**toHaveSameSizeAs**: Expect that the size of two arrays (or `Countable` or `Traversable` objects) is the same.
+### toBeFalse
+Expect that a condition is false.
 
-**toMatchFormat**: Expect that a string matches a given format string.
+### notToBeFalse
+Expect that a condition is not false.
 
-**toMatchFormatFile**: Expect that a string matches a given format file.
+### toBeNull
+Expect that a variable is null.
 
-**toStartWith**: Expect that a string starts with a given prefix.
+### notToBeNull
+Expect that a variable is not null.
 
-**toEndWith**: Expect that a string ends with a given suffix.
+### toBeFinite
+Expect that a variable is finite.
 
-**toEqualXmlFile**: Expect that the contents of one XML file or a string is equal to the contents of another XML file.
+### toBeInfinite
+Expect that a variable is infinite.
 
-**toHaveSameXMLStructureAs**: Expect that a hierarchy of DOMElements matches.
+### toBeNan
+Expect that a variable is nan.
 
-**toBeJson**: Expect that a string is a valid JSON string.
+### toHaveAttribute
+Expect that a class or an object has a specified attribute.
 
-**toEqualJson**: Expect that two given JSON encoded objects or arrays are equal.
+### notToHaveAttribute
+Expect that a class or an object does not have a specified attribute.
 
-**toEqualJsonFile**: Expect that the generated JSON encoded object and the content of the given file are equal.
+### toHaveStaticAttribute
+Expect that a class has a specified static attribute.
+
+### notToHaveStaticAttribute
+Expect that a class does not have a specified static attribute.
+
+### toBeInstanceOf
+Expect that a variable is of a given type.
+
+### notToBeInstanceOf
+Expect that a variable is not of a given type.
+
+### toBeOfType
+Expect that a variable is of a given type.
+
+### notToBeOfType
+Expect that a variable is not of a given type.
+
+### toMatchRegExp
+Expect that a string matches a given regular expression.
+
+### notToMatchRegExp
+Expect that a string does not match a given regular expression.
+
+### toHaveSameSizeAs
+Assert that the size of two arrays (or `Countable` or `Traversable` objects) is the same.
+
+### notToHaveSameSizeAs
+Assert that the size of two arrays (or `Countable` or `Traversable` objects) is not the same.
+
+### toMatchFormat
+Expect that a string matches a given format string.
+
+### notToMatchFormat
+Expect that a string does not match a given format string.
+
+### toMatchFormatFile
+Expect that a string matches a given format file.
+
+### notToMatchFormatFile
+Expect that a string does not match a given format string.
+
+### toStartWith
+Expect that a string starts with a given prefix.
+
+### notToStartWith
+Expect that a string starts not with a given prefix.
+
+### toEndWith
+Expect that a string ends with a given suffix.
+
+### notToEndWith
+Expect that a string ends not with a given suffix.
+
+### toEqualXmlFile
+Expect that two XML files or documents are equal.
+
+### notToEqualXmlFile
+Expect that two XML files or documents are not equal.
+
+### toEqualXml
+Expect that two XML documents are equal.
+
+### notToEqualXml
+Expect that two XML documents are not equal.
+
+### toHaveSameXMLStructureAs
+Expect that a hierarchy of DOMElements matches.
+
+### toBeJson
+Expect that a string is a valid JSON string.
+
+### toEqualJson
+Expect that two given JSON encoded objects or arrays are equal.
+
+### notToEqualJson
+Expect that two given JSON encoded objects or arrays are not equal.
+
+### toEqualJsonFile
+Expect that the generated JSON encoded object and the content of the given file or JSON string are equal.
+
+### notToEqualJsonFile
+Expect that the generated JSON encoded object and the content of the given file or JSON string are not equal.
