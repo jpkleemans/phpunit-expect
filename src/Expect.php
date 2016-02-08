@@ -977,7 +977,7 @@ class Expect
     }
 
     /**
-     * Expect that the generated JSON encoded object and the content of the given file are equal.
+     * Expect that the generated JSON encoded object and the content of the given file or JSON string are equal.
      *
      * @param string $expectedFile
      * @param string $message
@@ -996,7 +996,7 @@ class Expect
     }
 
     /**
-     * Expect that the generated JSON encoded object and the content of the given file are not equal.
+     * Expect that the generated JSON encoded object and the content of the given file or JSON string are not equal.
      *
      * @param string $expectedFile
      * @param string $message
