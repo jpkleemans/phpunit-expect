@@ -14,6 +14,7 @@ expect($number)->notToBeOfType('string');
 
 // Chained expectations
 expect($number)
+    ->toBeOfType('int')
     ->toBeGreaterThan(5)
     ->toBeLessThan(20);
 ```
