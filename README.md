@@ -23,13 +23,13 @@ expect($number)
 With Composer:
 
 ``` bash
-$ composer require jpkleemans/phpunit-expect --dev
+composer require jpkleemans/phpunit-expect --dev
 ```
 
 Or if you've installed PHPUnit globally:
 
 ``` bash
-$ composer global require jpkleemans/phpunit-expect
+composer global require jpkleemans/phpunit-expect
 ```
 
 ## Expectations
