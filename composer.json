@@ -10,7 +10,7 @@
             "email": "jpkleemans@gmail.com"
         }
     ],
-    "require-dev": {
+    "require": {
         "phpunit/phpunit": "^5.2"
     },
     "autoload": {
