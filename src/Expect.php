@@ -2,7 +2,7 @@
 
 namespace Expect;
 
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert as Assert;
 
 class Expect
 {
